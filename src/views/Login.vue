@@ -8,27 +8,23 @@
                 <h4>Login</h4>
               </div>
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form @submit.prevent="login" method="POST" action="#" >
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
-                    <div class="invalid-feedback">
-                      Please fill in your email
-                    </div>
+                    <input v-model="form.email" id="email" type="email" class="form-control" name="email" tabindex="1" autofocus>
+                    <span class="text-danger" v-if="errors?.email">{{ errors.email[0] }}</span>
                   </div>
                   <div class="form-group">
                     <div class="d-block">
                       <label for="password" class="control-label">Password</label>
                       <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small">
+                        <a href="#" class="text-small">
                           Forgot Password?
                         </a>
                       </div>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
-                    <div class="invalid-feedback">
-                      please fill in your password
-                    </div>
+                    <input v-model="form.password" id="password" type="password" class="form-control" name="password" tabindex="2">
+                    <span class="text-danger" v-if="errors?.password">{{ errors.password[0] }}</span>
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
@@ -37,7 +33,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    <button :disabled="disableSubmitBtn" type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                       Login
                     </button>
                   </div>
@@ -60,7 +56,8 @@
               </div>
             </div>
             <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="auth-register.html">Create One</a>
+              Don't have an account? 
+              <router-link :to="{name: 'register'}">Create One</router-link>
             </div>
           </div>
         </div>
@@ -69,7 +66,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-    
+    data() {
+      return {
+        form: {
+          email: '',
+          password: ''
+        },
+        errors: [],
+        disableSubmitBtn: false
+      }
+    },
+    methods: {
+      async login(){
+        this.errors = [];
+        this.disableSubmitBtn = true;
+        await axios.get('/sanctum/csrf-cookie')
+        await axios.post('/api/login', this.form)
+          .then(res=>{
+            this.$router.push('/')
+          }).catch(err=>{
+            this.disableSubmitBtn = false
+            this.errors = err?.response?.data?.errors
+          })
+      }
+    }
 }
 </script>
