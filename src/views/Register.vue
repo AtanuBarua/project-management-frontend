@@ -39,7 +39,7 @@
                   </div>
                   <div class="form-group col-6">
                     <label for="password2" class="d-block">Password Confirmation</label>
-                    <input v-model="data.password_confirmation" id="password2" type="password" class="form-control" name="password-confirm" />
+                    <input v-model="form.password_confirmation" id="password2" type="password" class="form-control" name="password-confirm" />
                     <span class="text-danger" v-if="errors?.password_confirmation">{{ errors.password_confirmation[0] }}</span>
                   </div>
                 </div>

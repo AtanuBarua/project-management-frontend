@@ -116,6 +116,7 @@ import SideBar from '../components/SideBar.vue';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import SidebarSetting from '../components/SidebarSetting.vue';
+import { useUserStore } from '@/stores/user';
 
 export default {
   components: {

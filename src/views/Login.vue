@@ -1,5 +1,6 @@
 <template>
     <section class="section">
+      <!-- {{ store.token != null }} -->
       <div class="container mt-5">
         <div class="row">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
@@ -67,6 +68,10 @@
 
 <script>
 import axios from 'axios'
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+import { useUserStore } from '@/stores/user';
+
 export default {
     data() {
       return {
@@ -75,8 +80,12 @@ export default {
           password: ''
         },
         errors: [],
-        disableSubmitBtn: false
+        disableSubmitBtn: false,
       }
+    },
+    setup(){
+      const store = new useUserStore();
+      return { store }
     },
     methods: {
       async login(){
@@ -85,12 +94,19 @@ export default {
         await axios.get('/sanctum/csrf-cookie')
         await axios.post('/api/login', this.form)
           .then(res=>{
+            this.store.setToken(res.data.token)
+            this.$toast.success(res.data.message, {
+              position: 'top-right'
+            })
             this.$router.push('/')
           }).catch(err=>{
             this.disableSubmitBtn = false
             this.errors = err?.response?.data?.errors
           })
       }
+    },
+    mounted(){
+      this.$toast = useToast();
     }
 }
 </script>
