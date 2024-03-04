@@ -135,6 +135,7 @@
             </div>
           </div>
         </li>
+        <!-- {{ store.token != null  }} -->
         <li class="dropdown"><a href="#" data-toggle="dropdown"
             class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="@/assets/img/user.png"
               class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
@@ -148,7 +149,11 @@
               Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+            <!-- <router-link :to="{ name: 'logout' }">
+              
+            </router-link> -->
+            <a @click="logout" href="#" class="dropdown-item has-icon text-danger"> 
+              <i class="fas fa-sign-out-alt"></i>
               Logout
             </a>
           </div>
@@ -156,3 +161,20 @@
       </ul>
     </nav>
 </template>
+
+<script>
+import { useUserStore } from '@/stores/user';
+
+export default {
+  setup() {
+    const store = new useUserStore();
+    return { store }
+  },
+  methods: {
+    logout() {
+      this.store.removeToken();
+      this.$router.push({name: 'login'})
+    }
+  }
+}
+</script>
