@@ -1,6 +1,6 @@
 <template>
-    <div class="settingSidebar">
-        <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
+    <div class="settingSidebar" :class="{'showSettingPanel': isSettingPanelVisible}">
+        <a href="javascript:void(0)" @click="toggleSettingPanel" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
         </a>
         <div class="settingSidebar-body ps-container ps-theme-default">
           <div class=" fade show active">
@@ -91,3 +91,19 @@
         </div>
       </div>
 </template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      isSettingPanelVisible: false
+    }
+  },
+  methods: {
+    toggleSettingPanel() {
+      this.isSettingPanelVisible = !this.isSettingPanelVisible;
+    }
+  }
+}
+</script>
