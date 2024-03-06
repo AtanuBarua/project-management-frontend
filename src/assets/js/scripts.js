@@ -599,9 +599,9 @@ $(function () {
 
   // setting sidebar
 
-  $(".settingPanelToggle").on("click", function () {
-    $(".settingSidebar").toggleClass("showSettingPanel");
-  }),
+  // $(".settingPanelToggle").on("click", function () {
+  //   $(".settingSidebar").toggleClass("showSettingPanel");
+  // }),
     $(".page-wrapper").on("click", function () {
       $(".settingSidebar").removeClass("showSettingPanel");
     });
