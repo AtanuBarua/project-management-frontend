@@ -9,10 +9,15 @@
         </div>
         <ul class="sidebar-menu">
           <li class="menu-header">Main</li>
-          <li class="dropdown active">
+          <li class="dropdown" :class="{active: $route.name === 'home'}">
             <router-link :to="{name: 'home'}">
               <i data-feather="monitor"></i>
             <span>Dashboard</span></router-link>
+          </li>
+          <li class="dropdown" :class="{active: $route.name === 'projects'}">
+            <router-link :to="{name: 'projects'}">
+              <i data-feather="grid"></i>
+            <span>Projects</span></router-link>
           </li>
           
         </ul>

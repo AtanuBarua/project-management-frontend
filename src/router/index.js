@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/Login.vue';
 import RegisterView from '../views/Register.vue';
 import { useUserStore } from '../stores/user.js';
+import ProjectsView from '../views/ProjectsView.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +26,13 @@ const router = createRouter({
       name: 'register',
       component: RegisterView,
       meta: { requireAuth: false }
-    }
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: ProjectsView,
+      meta: {  requireAuth: true }
+    },
   ]
 })
 
